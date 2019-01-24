@@ -1,0 +1,48 @@
+{
+    "name": "jjsoft-ar/jjsoftframe",
+    "type": "project",
+    "description": "A small, simple PHP MVC framework skeleton that encapsulates a lot of features surrounded with powerful security layers.",
+    "keywords": ["framework", "authentication", "authorization", "mvc", "security", "login", "encryption", "validation", "files", "ajax"],
+    "homepage": "https://github.com/jjsoft-ar/jjsoftframe",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose C Gallo",
+            "email": "josecgallo@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/OmarElGabry/miniPHP/issues",
+        "source": "https://github.com/OmarElGabry/miniPHP"
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "ext-bcmath": "*",
+        "phpmailer/phpmailer": "~5.2",
+        "eftec/bladeone":"~3.17",
+        "illuminate/database": "5.1.8",
+        "vlucas/phpdotenv": "^2.5",
+        "symfony/console": "^3.4",
+        "gregwar/captcha": "^1.1",
+        "robmorgan/phinx": "^0.10.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "guzzlehttp/guzzle": "^6.3",
+        "wanfeiyy/dd": "^1.0"
+    },
+    "autoload": {
+        "classmap": ["app/console/commands"],
+    	"psr-4": { 
+    	    "": ["app/core/", "app/utility/", "app/controllers/", "app/core/components/"],
+    	    "Models\\": "app/models/",
+    	    "Modules\\": "app/modules/"
+    	}
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JjsoftTest\\": "tests/"
+        }
+    }
+}

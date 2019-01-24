@@ -1,0 +1,26 @@
+14/12/2018 16:18:05 | /home/ubuntu/workspace/systems/sipee2/app/config/config.php | 21 | Error
+Call to undefined function env()
+*******************************************************************
+
+14/12/2018 16:18:05 | /home/ubuntu/workspace/systems/sipee2/app/config/config.php | 21 | ErrorException
+Uncaught Error: Call to undefined function env() in /home/ubuntu/workspace/systems/sipee2/app/config/config.php:21
+Stack trace:
+#0 /home/ubuntu/workspace/systems/sipee2/app/core/Config.php(87): require()
+#1 /home/ubuntu/workspace/systems/sipee2/app/core/Config.php(37): Config::_get('VIEWS_PATH', 'config')
+#2 /home/ubuntu/workspace/systems/sipee2/app/controllers/ErrorsController.php(41): Config::get('VIEWS_PATH')
+#3 /home/ubuntu/workspace/systems/sipee2/app/core/Controller.php(208): ErrorsController->System()
+#4 /home/ubuntu/workspace/systems/sipee2/app/core/Handler.php(94): Controller->error(500)
+#5 /home/ubuntu/workspace/systems/sipee2/app/core/Handler.php(79): Handler::render(Object(Error))
+#6 [internal function]: Handler::handleException(Object(Error))
+#7 {main}
+  thrown
+*******************************************************************
+
+17/12/2018 22:06:21 | /home/ubuntu/workspace/systems/framework/app/core/Controller.php | 238 | Error
+Class 'Login' not found
+*******************************************************************
+
+17/12/2018 22:06:32 | /home/ubuntu/workspace/systems/framework/app/core/Controller.php | 238 | Error
+Class 'Login' not found
+*******************************************************************
+

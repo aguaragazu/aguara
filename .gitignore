@@ -1,0 +1,31 @@
+### Cloud9
+# Cloud9 IDE - http://c9.io
+.c9revisions
+.c9
+
+### php-cs-fixer
+.php_cs.cache
+
+### Composer
+vendor/
+
+### Laravel
+.env.*.php
+.env.php
+.env
+
+### Extjs
+.architect
+bootstrap.css
+bootstrap.js
+bootstrap.json
+bootstrap.jsonp
+build/
+classic.json
+classic.jsonp
+ext/
+modern.json
+modern.jsonp
+resources/sass/.sass-cache/
+resources/.arch-internal-preview.css
+.arch-internal-preview.css
