@@ -1,5 +1,7 @@
 <?php
 
+use User;
+
 /**
  * Session Class.
  *
@@ -259,13 +261,9 @@ class Session
         $userId = self::getUserId();
 
         if (isset($userId) && isset($session_id)) {
-            $database = Database::openConnection();
-            $database->prepare('SELECT session_id FROM users WHERE id = :id LIMIT 1');
+            $result = User::find($userId)->first();
 
-            $database->bindValue(':id', $userId);
-            $database->execute();
-            $result = $database->fetchAssociative();
-            $userSessionId = !empty($result) ? $result['session_id'] : null;
+            $userSessionId = !empty($result) ? $result->session_id : null;
 
             return $session_id !== $userSessionId;
         }
@@ -341,12 +339,9 @@ class Session
      */
     private static function updateSessionId($userId, $sessionId = null)
     {
-        $database = Database::openConnection();
-        $database->prepare('UPDATE users SET session_id = :session_id WHERE id = :id');
-
-        $database->bindValue(':session_id', $sessionId);
-        $database->bindValue(':id', $userId);
-        $database->execute();
+        $user = User::find($userId);
+        $user->session_id = $sessionId;
+        $user->save();
     }
 
     /**

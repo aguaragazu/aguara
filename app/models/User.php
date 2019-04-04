@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * User Class.
  *
@@ -13,9 +15,18 @@ class User extends Model
      *
      * @var string
      */
-    public $table = 'users';
+    protected $table = 'users';
 
     /**
+     * Fields names for this & extending classes.
+     *
+     * @var string
+     */
+    protected $fillable = ['name', 'email', 'role', 'hashed_password', 'profile_picture', 'email_token', 'email_last_verification'];
+
+    public $timestamps = false;
+
+    /*
      * returns an associative array holds the user info(image, name, id, ...etc.).
      *
      * @param int $userId
@@ -24,25 +35,12 @@ class User extends Model
      *
      * @throws Exception if $userId is invalid
      */
-    public function getProfileInfo($userId)
+    public function profile($userId)
     {
-        $database = Database::openConnection();
-        $database->getById('users', $userId);
-
-        if (1 !== $database->countRows()) {
-            throw new Exception('User ID '.$userId." doesn't exists");
-        }
-
-        $user = $database->fetchAssociative();
-
-        $user['id'] = (int) $user['id'];
-        $user['image'] = PUBLIC_ROOT.'img/profile_pictures/'.$user['profile_picture'];
-        // $user["email"] = empty($user['is_email_activated'])? null: $user['email'];
-
-        return $user;
+        return $this::find($userId);
     }
 
-    /**
+    /*
      * Update the current profile.
      *
      * @param int    $userId
@@ -54,7 +52,7 @@ class User extends Model
      * @return bool|array
      *
      * @throws Exception If profile couldn't be updated
-     */
+     *
     public function updateProfileInfo($userId, $name, $password, $email, $confirmEmail)
     {
         $database = Database::openConnection();
@@ -135,7 +133,7 @@ class User extends Model
      * @return mixed
      *
      * @throws Exception if failed to update profile picture
-     */
+     *
     public function updateProfilePicture($userId, $fileData)
     {
         $image = Uploader::uploadPicture($fileData, $userId);
@@ -172,7 +170,7 @@ class User extends Model
      * @return mixed
      *
      * @throws Exception if failed to revoke email updates
-     */
+     *
     public function revokeEmail($userId, $emailToken)
     {
         if (empty($userId) || empty($emailToken)) {
@@ -213,7 +211,7 @@ class User extends Model
      * @return mixed
      *
      * @throws Exception if failed to update current email
-     */
+     *
     public function updateEmail($userId, $emailToken)
     {
         if (empty($userId) || empty($emailToken)) {
@@ -271,7 +269,7 @@ class User extends Model
      * @param int $userId
      *
      * @return array
-     */
+     *
     public function getNotifications($userId)
     {
         $database = Database::openConnection();
@@ -291,7 +289,7 @@ class User extends Model
      *
      * @param int    $userId
      * @param string $table
-     */
+     *
     public function clearNotifications($userId, $table)
     {
         $database = Database::openConnection();
@@ -313,7 +311,7 @@ class User extends Model
      * 2. latest updates by using "UNION".
      *
      * @return array
-     */
+     *
     public function dashboard()
     {
         $database = Database::openConnection();
@@ -358,7 +356,7 @@ class User extends Model
      * @param string $message
      *
      * @return bool
-     */
+     *
     public function reportBug($userId, $subject, $label, $message)
     {
         $validation = new Validation();
@@ -378,5 +376,5 @@ class User extends Model
         Email::sendEmail(Config::get('EMAIL_REPORT_BUG'), Config::get('ADMIN_EMAIL'), ['id' => $userId, 'name' => $curUser['name']], $data);
 
         return true;
-    }
+    }*/
 }

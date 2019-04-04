@@ -8,13 +8,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GreetCommand extends Command
 {
-    protected $commandName = 'app:greet';
-    protected $commandDescription = 'Greets Someone';
+    protected $commandName = 'make:model';
+    protected $commandDescription = 'Make Model';
 
     protected $commandArgumentName = 'name';
-    protected $commandArgumentDescription = 'Who do you want to greet?';
+    protected $commandArgumentDescription = 'Name of Model';
 
-    protected $commandOptionName = 'cap'; // should be specified like "app:greet John --cap"
+    protected $commandOptionName = 'cap'; // should be specified like "make:model John --cap"
     protected $commandOptionDescription = 'If set, it will greet in uppercase letters';
 
     protected function configure()

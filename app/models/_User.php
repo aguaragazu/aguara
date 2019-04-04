@@ -1,9 +1,5 @@
 <?php
 
-namespace Models;
-
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * User Class.
  *
@@ -17,16 +13,9 @@ class User extends Model
      *
      * @var string
      */
-    protected $table = 'users';
+    public $table = 'users';
 
     /**
-     * Fields names for this & extending classes.
-     *
-     * @var string
-     */
-    protected $fillable = ['name', 'email', 'hashed_password', 'profile_picture'];
-
-    /*
      * returns an associative array holds the user info(image, name, id, ...etc.).
      *
      * @param int $userId
@@ -34,7 +23,7 @@ class User extends Model
      * @return array associative array of current user info/data
      *
      * @throws Exception if $userId is invalid
-     *
+     */
     public function getProfileInfo($userId)
     {
         $database = Database::openConnection();
@@ -65,7 +54,7 @@ class User extends Model
      * @return bool|array
      *
      * @throws Exception If profile couldn't be updated
-     *
+     */
     public function updateProfileInfo($userId, $name, $password, $email, $confirmEmail)
     {
         $database = Database::openConnection();
@@ -146,7 +135,7 @@ class User extends Model
      * @return mixed
      *
      * @throws Exception if failed to update profile picture
-     *
+     */
     public function updateProfilePicture($userId, $fileData)
     {
         $image = Uploader::uploadPicture($fileData, $userId);
@@ -183,7 +172,7 @@ class User extends Model
      * @return mixed
      *
      * @throws Exception if failed to revoke email updates
-     *
+     */
     public function revokeEmail($userId, $emailToken)
     {
         if (empty($userId) || empty($emailToken)) {
@@ -224,7 +213,7 @@ class User extends Model
      * @return mixed
      *
      * @throws Exception if failed to update current email
-     *
+     */
     public function updateEmail($userId, $emailToken)
     {
         if (empty($userId) || empty($emailToken)) {
@@ -282,7 +271,7 @@ class User extends Model
      * @param int $userId
      *
      * @return array
-     *
+     */
     public function getNotifications($userId)
     {
         $database = Database::openConnection();
@@ -302,7 +291,7 @@ class User extends Model
      *
      * @param int    $userId
      * @param string $table
-     *
+     */
     public function clearNotifications($userId, $table)
     {
         $database = Database::openConnection();
@@ -324,7 +313,7 @@ class User extends Model
      * 2. latest updates by using "UNION".
      *
      * @return array
-     *
+     */
     public function dashboard()
     {
         $database = Database::openConnection();
@@ -369,7 +358,7 @@ class User extends Model
      * @param string $message
      *
      * @return bool
-     *
+     */
     public function reportBug($userId, $subject, $label, $message)
     {
         $validation = new Validation();
@@ -389,5 +378,5 @@ class User extends Model
         Email::sendEmail(Config::get('EMAIL_REPORT_BUG'), Config::get('ADMIN_EMAIL'), ['id' => $userId, 'name' => $curUser['name']], $data);
 
         return true;
-    }*/
+    }
 }

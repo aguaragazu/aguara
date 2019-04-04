@@ -25,7 +25,9 @@
         "vlucas/phpdotenv": "^2.5",
         "symfony/console": "^3.4",
         "gregwar/captcha": "^1.1",
-        "robmorgan/phinx": "^0.10.6"
+        "robmorgan/phinx": "^0.10.6",
+        "illuminate/notifications": "^5.5",
+        "psy/psysh": "@stable"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
@@ -35,8 +37,7 @@
     "autoload": {
         "classmap": ["app/console/commands"],
     	"psr-4": { 
-    	    "": ["app/core/", "app/utility/", "app/controllers/", "app/core/components/"],
-    	    "Models\\": "app/models/",
+    	    "": ["app/core/", "app/utility/", "app/models/", "app/controllers/", "app/core/components/"],
     	    "Modules\\": "app/modules/"
     	}
     },

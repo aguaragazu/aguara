@@ -1,26 +1,64 @@
-14/12/2018 16:18:05 | /home/ubuntu/workspace/systems/sipee2/app/config/config.php | 21 | Error
-Call to undefined function env()
+23/03/2019 23:51:09 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 253 | Error
+Class 'Database' not found
 *******************************************************************
 
-14/12/2018 16:18:05 | /home/ubuntu/workspace/systems/sipee2/app/config/config.php | 21 | ErrorException
-Uncaught Error: Call to undefined function env() in /home/ubuntu/workspace/systems/sipee2/app/config/config.php:21
-Stack trace:
-#0 /home/ubuntu/workspace/systems/sipee2/app/core/Config.php(87): require()
-#1 /home/ubuntu/workspace/systems/sipee2/app/core/Config.php(37): Config::_get('VIEWS_PATH', 'config')
-#2 /home/ubuntu/workspace/systems/sipee2/app/controllers/ErrorsController.php(41): Config::get('VIEWS_PATH')
-#3 /home/ubuntu/workspace/systems/sipee2/app/core/Controller.php(208): ErrorsController->System()
-#4 /home/ubuntu/workspace/systems/sipee2/app/core/Handler.php(94): Controller->error(500)
-#5 /home/ubuntu/workspace/systems/sipee2/app/core/Handler.php(79): Handler::render(Object(Error))
-#6 [internal function]: Handler::handleException(Object(Error))
-#7 {main}
-  thrown
+23/03/2019 23:51:22 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 252 | CSRF Attack
+User: 1 provided invalid CSRF Token 46c3307c57d9a0e340e132432c5a842b
 *******************************************************************
 
-17/12/2018 22:06:21 | /home/ubuntu/workspace/systems/framework/app/core/Controller.php | 238 | Error
-Class 'Login' not found
+23/03/2019 23:51:22 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
+The request has been deined
 *******************************************************************
 
-17/12/2018 22:06:32 | /home/ubuntu/workspace/systems/framework/app/core/Controller.php | 238 | Error
-Class 'Login' not found
+23/03/2019 23:51:27 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+23/03/2019 23:52:06 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+23/03/2019 23:53:02 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+23/03/2019 23:53:31 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
+The request has been deined
+*******************************************************************
+
+23/03/2019 23:53:38 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+24/03/2019 0:00:08 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+24/03/2019 0:00:28 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+24/03/2019 0:00:43 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+30/03/2019 13:58:44 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 253 | Error
+Class 'Database' not found
+*******************************************************************
+
+30/03/2019 14:01:21 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+30/03/2019 14:01:57 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+30/03/2019 14:02:02 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+*******************************************************************
+
+30/03/2019 14:02:43 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 253 | Error
+Class 'Database' not found
 *******************************************************************
 

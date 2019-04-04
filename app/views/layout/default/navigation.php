@@ -1,15 +1,16 @@
 <?php 
 
-    $notifications = $this->controller->user->getNotifications(Session::getUserId());
+//    $notifications = $this->controller->user->getNotifications(Session::getUserId());
     $newsfeed = $posts = $files = '';
-    foreach ($notifications as $notification) {
+/*    foreach ($notifications as $notification) {
         if ($notification['count'] > 0) {
             // $$notification["target"] = $notification["count"];        // DEPRECATED IN PHP 7
             ${$notification['target']} = $notification['count'];
         }
     }
-
-    $info = $this->controller->user->getProfileInfo(Session::getUserId());
+*/
+//dd(User::find(Session::getUserId())->name, User::profile());
+//    $info = $this->controller->user->getProfileInfo(Session::getUserId());
 
 ?>
 
@@ -29,7 +30,7 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        Hello,<strong> <?= $info['name']; ?></strong> <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        Hello,<strong> {{User::find(Session::getUserId())->name}}</strong> <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="<?= PUBLIC_ROOT.'User/Profile'; ?>"><i class="fa fa-user fa-fw"></i> Profile</a>

@@ -14,7 +14,7 @@ require '../vendor/autoload.php';
 $dotenv = new Dotenv\Dotenv('../');
 $dotenv->load();
 
-use Models\DatabaseORM;
+//use Models\DatabaseORM;
 
 //Initialize Illuminate Database Connection
 new DatabaseORM();

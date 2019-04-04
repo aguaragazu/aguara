@@ -1,6 +1,15 @@
 # aguara
 framework personal con base inicial en Mini PHP ( https://github.com/OmarElGabry/miniPHP )
 
+Base en MiniPHP
+add Eloquent
+add PHPDotEnv
+add Blade
+add Console guazu
+add dd to debug
+add psysh
+
+
 
 ![miniPHP](https://raw.githubusercontent.com/OmarElGabry/miniPHP/master/public/img/backgrounds/background.png)
 

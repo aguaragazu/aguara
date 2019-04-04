@@ -12,6 +12,6 @@
         <!-- Run the application -->
         <script>$(document).ready(app.init());</script>
 
-		<?php Database::closeConnection(); ?>
+		
 	</body>
 </html>
