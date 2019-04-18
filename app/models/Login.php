@@ -89,7 +89,7 @@ class Login extends Model
 
             return false;
         }
-
+        //dd($this->isIpBlocked($userIp));
         // 2. validate only presence
         $validation = new Validation();
         if (!$validation->validate([
@@ -99,9 +99,9 @@ class Login extends Model
 
             return false;
         }
-
+        //dd($this->errors);
         // 3. check if user has previous failed login attempts
-        $failedLogin = FailedLogins::where('user_email', '=', $email)->get();
+        $failedLogin = FailedLogins::where('user_email', $email)->get()->toArray();
 
         $last_time = isset($failedLogin['last_failed_login']) ? $failedLogin['last_failed_login'] : null;
         $count = isset($failedLogin['failed_login_attempts']) ? $failedLogin['failed_login_attempts'] : null;
@@ -119,7 +119,7 @@ class Login extends Model
         $user = User::where('email', '=', $email)
             ->where('is_email_activated', '=', 1)
             ->first();
-
+        // dd($user);
         $userId = isset($user['id']) ? $user['id'] : null;
         $hashedPassword = isset($user['hashed_password']) ? $user['hashed_password'] : null;
 
@@ -134,6 +134,7 @@ class Login extends Model
             $this->handleIpFailedLogin($userIp, $email);
 
             $this->errors = $validation->errors();
+            // dd($this->errors);
 
             return false;
         }
@@ -193,13 +194,13 @@ class Login extends Model
     private function handleIpFailedLogin($userIp, $email)
     {
         $count = IpFailedLogins::where('ip', '=', $userIp)->count();
-
         // block IP if there were failed login attempts using different emails(>= 10) from the same IP address
         if ($count >= 10) {
             $this->blockIp($userIp);
         } else {
             // check if ip_failed_logins already has a record with current ip + email
             // if not, then insert it.
+            $ips = BlockedIps::get(['ip'])->toArray();
             if (!in_array(['ip' => $userIp, 'user_email' => $email], $ips, true)) {
                 IpFailedLogins::create([
                     'ip' => $userIp,
@@ -219,26 +220,24 @@ class Login extends Model
      */
     private function incrementFailedLogins($email, $failedLogin)
     {
-        $database = Database::openConnection();
-
-        if (!empty($failedLogin)) {
-            $query = 'UPDATE failed_logins SET last_failed_login = :last_failed_login, '.
-                     'failed_login_attempts = failed_login_attempts+1 WHERE user_email = :user_email';
-        } else {
-            $query = 'INSERT INTO failed_logins (user_email, last_failed_login, failed_login_attempts) '.
-                     'VALUES (:user_email, :last_failed_login, 1)';
-        }
-
         // Remember? the user_email we are using here is not a foreign key from users table
         // Why? because this will block even un registered users
-        $database->prepare($query);
-        $database->bindValue(':last_failed_login', time());
-        $database->bindValue(':user_email', $email);
-        $result = $database->execute();
-
-        if (!$result) {
-            throw new Exception('FAILED LOGIN', "Couldn't increment failed logins of User Email: ".$email, __FILE__, __LINE__);
+        // dd($email, $failedLogin, !empty($failedLogin), empty($failedLogin));
+        if (!empty($failedLogin)) {
+            FailedLogins::firstOrFail()->where('user_email', $email)->increment('failed_login_attempts', 1);
+            FailedLogins::firstOrFail()->where('user_email', $email)->update(['last_failed_login' => time()]);
+        } else {
+            $FailedLogins = new FailedLogins();
+            $FailedLogins->user_email = $email;
+            $FailedLogins->last_failed_login = time();
+            $FailedLogins->failed_login_attempts = 1;
+            $FailedLogins->save();
         }
+        /*
+                if (!$result) {
+                    throw new Exception('FAILED LOGIN', "Couldn't increment failed logins of User Email: ".$email, __FILE__, __LINE__);
+                }
+        */
     }
 
     /**
@@ -250,17 +249,16 @@ class Login extends Model
      */
     private function resetFailedLogins($email)
     {
-        $database = Database::openConnection();
-        $query = 'UPDATE failed_logins SET last_failed_login = NULL, '.
-                 'failed_login_attempts = 0 WHERE user_email = :user_email';
+        $FailedLogins = FailedLogins::firstOrFail()->where('user_email', $email);
+        $FailedLogins->last_failed_login = '';
+        $FailedLogins->failed_login_attempts = 0;
+        $FailedLogins->save();
 
-        $database->prepare($query);
-        $database->bindValue(':user_email', $email);
-        $result = $database->execute();
+        /*
 
         if (!$result) {
             throw new Exception("Couldn't reset failed logins for User Email ".$email);
-        }
+        }*/
     }
 
     /**
@@ -320,12 +318,11 @@ class Login extends Model
     {
         // email is already unique in the database,
         // So, we can't have more than 2 users with the same emails
-        $database = Database::openConnection();
-        $database->prepare('SELECT * FROM users WHERE email = :email AND is_email_activated = 1 LIMIT 1');
-        $database->bindValue(':email', $email);
-        $database->execute();
+        $existe = User::where('email', $email)
+            ->where('is_email_activated', 1)
+            ->count();
 
-        return 1 === $database->countRows();
+        return 1 === $existe;
     }
 
     /**
@@ -340,30 +337,30 @@ class Login extends Model
      */
     private function generateForgottenPasswordToken($userId, $forgottenPassword)
     {
-        $database = Database::openConnection();
-
-        if (!empty($forgottenPassword)) {
-            $query = 'UPDATE forgotten_passwords SET password_token = :password_token, '.
-                     'password_last_reset = :password_last_reset, forgotten_password_attempts = forgotten_password_attempts+1 '.
-                     'WHERE user_id = :user_id';
-        } else {
-            $query = 'INSERT INTO forgotten_passwords (user_id, password_token, password_last_reset, forgotten_password_attempts) '.
-                     'VALUES (:user_id, :password_token, :password_last_reset, 1)';
-        }
-
         // generate random hash for email verification (40 char string)
         $passwordToken = sha1(uniqid(mt_rand(), true));
 
-        $database->prepare($query);
-        $database->bindValue(':password_token', $passwordToken);
-        $database->bindValue(':password_last_reset', time());
-        $database->bindValue(':user_id', $userId);
-        $result = $database->execute();
+        if (!empty($forgottenPassword)) {
+            $forgotten = ForgottenPassword::firstOrFail()->where('user_id', $userId);
+            $forgotten->password_token = $passwordToken;
+            $forgotten->password_last_reset = time();
+            $forgotten->increment('forgotten_password_attempts');
+            $forgotten->save();
+        } else {
+            $forgotten = new ForgottenPassword();
+            $forgotten->user_id = $userId;
+            $forgotten->password_token = $passwordToken;
+            $forgotten->password_last_reset = time();
+            $forgotten->forgotten_password_attempts = 1;
+            $forgotten->save();
+        }
+
+        /*
 
         if (!$result) {
             throw new Exception("Couldn't generate token");
         }
-
+        */
         return ['password_token' => $passwordToken];
     }
 
@@ -381,12 +378,21 @@ class Login extends Model
             return false;
         }
 
-        $database = Database::openConnection();
-        $database->prepare('SELECT * FROM forgotten_passwords WHERE user_id = :user_id AND password_token = :password_token LIMIT 1');
-        $database->bindValue(':user_id', $userId);
-        $database->bindValue(':password_token', $passwordToken);
-        $database->execute();
-        $forgottenPassword = $database->fetchAssociative();
+        $forgottenPassword = ForgottenPassword::firstOrFail()->where('user_id', $userId)
+            ->where('password_token', $passwordToken)
+            ->toArray();
+
+        // esto es por la migracion de database a eloquent
+        if (count($forgottenPassword)) {
+            $database[$userId] = $forgottenPassword;
+        }
+
+        // $database = Database::openConnection();
+        // $database->prepare('SELECT * FROM forgotten_passwords WHERE user_id = :user_id AND password_token = :password_token LIMIT 1');
+        // $database->bindValue(':user_id', $userId);
+        // $database->bindValue(':password_token', $passwordToken);
+        // $database->execute();
+        // $forgottenPassword = $database->fetchAssociative();
 
         // It's bad to send the users any passwords, because you can't be sure if the email will be secured,
         // Also don't send plain text password,
@@ -394,10 +400,10 @@ class Login extends Model
         $expiry_time = (24 * 60 * 60);
         $time_elapsed = time() - $forgottenPassword['password_last_reset'];
 
-        if (1 === $database->countRows() && $time_elapsed < $expiry_time) {
+        if (1 === count($database) && $time_elapsed < $expiry_time) {
             // reset token only after the user enters his password.
             return true;
-        } elseif (1 === $database->countRows() && $time_elapsed > $expiry_time) {
+        } elseif (1 === count($database) && $time_elapsed > $expiry_time) {
             // reset if the user id & token exists in the database, but exceeded the $expiry_time
             $this->resetPasswordToken($userId);
 
@@ -435,17 +441,21 @@ class Login extends Model
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT, array('cost' => Config::get('HASH_COST_FACTOR')));
-        $database = Database::openConnection();
+        $user = User::firstOrFail()->where('id', $userId);
+        $user->hashed_password = $hashedPassword;
+        $user->save();
 
-        $query = 'UPDATE users SET hashed_password = :hashed_password WHERE id = :id LIMIT 1';
-        $database->prepare($query);
-        $database->bindValue(':hashed_password', $hashedPassword);
-        $database->bindValue(':id', $userId);
-        $result = $database->execute();
+        // $database = Database::openConnection();
 
-        if (!$result) {
-            throw new Exception("Couldn't update password");
-        }
+        // $query = 'UPDATE users SET hashed_password = :hashed_password WHERE id = :id LIMIT 1';
+        // $database->prepare($query);
+        // $database->bindValue(':hashed_password', $hashedPassword);
+        // $database->bindValue(':id', $userId);
+        // $result = $database->execute();
+
+        // if (!$result) {
+        //     throw new Exception("Couldn't update password");
+        // }
 
         // resetting the password token comes ONLY after successful updating password
         $this->resetPasswordToken($userId);
@@ -462,17 +472,23 @@ class Login extends Model
      */
     private function resetPasswordToken($userId)
     {
-        $database = Database::openConnection();
-        $query = 'UPDATE forgotten_passwords SET password_token = NULL, '.
-                 'password_last_reset = NULL, forgotten_password_attempts = 0 '.
-                 'WHERE user_id = :user_id LIMIT 1';
+        $forgottenPassword = ForgottenPassword::firstOrFail()->where('user_id', $userId);
+        $forgottenPassword->password_token = null;
+        $forgottenPassword->password_last_reset = null;
+        $forgottenPassword->forgotten_password_attempts = 0;
+        $forgottenPassword->save();
 
-        $database->prepare($query);
-        $database->bindValue(':user_id', $userId);
-        $result = $database->execute();
-        if (!$result) {
-            throw new Exception("Couldn't reset password token");
-        }
+        // $database = Database::openConnection();
+        // $query = 'UPDATE forgotten_passwords SET password_token = NULL, '.
+        //          'password_last_reset = NULL, forgotten_password_attempts = 0 '.
+        //          'WHERE user_id = :user_id LIMIT 1';
+
+        // $database->prepare($query);
+        // $database->bindValue(':user_id', $userId);
+        // $result = $database->execute();
+        // if (!$result) {
+        //     throw new Exception("Couldn't reset password token");
+        // }
     }
 
     /**
@@ -489,11 +505,14 @@ class Login extends Model
             return false;
         }
 
-        $database = Database::openConnection();
-        $database->prepare('SELECT * FROM users WHERE id = :id LIMIT 1');
-        $database->bindValue(':id', $userId);
-        $database->execute();
-        $user = $database->fetchAssociative();
+        $user = User::firstOrFail()->where('id', $userId)->toArray();
+
+        // $database = Database::openConnection();
+        // $database->prepare('SELECT * FROM users WHERE id = :id LIMIT 1');
+        // $database->bindValue(':id', $userId);
+        // $database->execute();
+        // $user = $database->fetchAssociative();
+
         $isTokenValid = ($user['email_token'] === $emailToken) ? true : false;
 
         // check if user is already verified
@@ -511,11 +530,11 @@ class Login extends Model
         $time_elapsed = time() - $user['email_last_verification'];
 
         // token is usable only once.
-        if (1 === $database->countRows() && $isTokenValid && $time_elapsed < $expiry_time) {
+        if ($user && $isTokenValid && $time_elapsed < $expiry_time) {
             $this->resetEmailVerificationToken($userId, true);
 
             return true;
-        } elseif (1 === $database->countRows() && $isTokenValid && $time_elapsed > $expiry_time) {
+        } elseif ($user && $isTokenValid && $time_elapsed > $expiry_time) {
             $this->resetEmailVerificationToken($userId, false);
 
             return false;
@@ -540,22 +559,31 @@ class Login extends Model
      */
     public function resetEmailVerificationToken($userId, $isValid)
     {
-        $database = Database::openConnection();
+        $user = User::firstOrFail()->where('id', $userId);
+
+        // $database = Database::openConnection();
 
         if ($isValid) {
-            $query = 'UPDATE users SET email_token = NULL, '.
-                'email_last_verification = NULL, is_email_activated = 1 '.
-                'WHERE id = :id LIMIT 1';
+            $user->email_token = null;
+            $user->email_last_verification = null;
+            $user->is_email_activated = 1;
+            $user->save();
+
+        // $query = 'UPDATE users SET email_token = NULL, '.
+            //     'email_last_verification = NULL, is_email_activated = 1 '.
+            //     'WHERE id = :id LIMIT 1';
         } else {
-            $query = 'DELETE FROM users WHERE id = :id';
+            $res = User::where('id', $userId)->delete();
+
+            // $query = 'DELETE FROM users WHERE id = :id';
         }
 
-        $database->prepare($query);
-        $database->bindValue(':id', $userId);
-        $result = $database->execute();
-        if (!$result) {
-            throw new Exception("Couldn't reset email verification token");
-        }
+        // $database->prepare($query);
+        // $database->bindValue(':id', $userId);
+        // $result = $database->execute();
+        // if (!$result) {
+        //     throw new Exception("Couldn't reset email verification token");
+        // }
     }
 
     /**

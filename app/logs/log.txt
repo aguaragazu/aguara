@@ -1,64 +1,199 @@
-23/03/2019 23:51:09 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 253 | Error
-Class 'Database' not found
+11/04/2019 13:39:30 | /home/ubuntu/workspace/systems/framework/app/core/Session.php | 26 | ErrorException
+session_start(): ps_files_cleanup_dir: opendir(/var/lib/php/sessions) failed: Permission denied (13)
 *******************************************************************
 
-23/03/2019 23:51:22 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 252 | CSRF Attack
-User: 1 provided invalid CSRF Token 46c3307c57d9a0e340e132432c5a842b
+11/04/2019 13:39:30 | /home/ubuntu/workspace/systems/framework/app/config/config.php | 99 | ErrorException
+Uncaught ErrorException: Use of undefined constant PUBLIC_ROOT - assumed 'PUBLIC_ROOT' in /home/ubuntu/workspace/systems/framework/app/config/config.php:99
+Stack trace:
+#0 /home/ubuntu/workspace/systems/framework/app/config/config.php(99): Handler::handleError(8, 'Use of undefine...', '/home/ubuntu/wo...', 99, Array)
+#1 /home/ubuntu/workspace/systems/framework/app/core/Config.php(87): require('/home/ubuntu/wo...')
+#2 /home/ubuntu/workspace/systems/framework/app/core/Config.php(37): Config::_get('VIEWS_PATH', 'config')
+#3 /home/ubuntu/workspace/systems/framework/app/controllers/ErrorsController.php(41): Config::get('VIEWS_PATH')
+#4 /home/ubuntu/workspace/systems/framework/app/core/Controller.php(201): ErrorsController->System()
+#5 /home/ubuntu/workspace/systems/framework/app/core/Handler.php(94): Controller->error(500)
+#6 /home/ubuntu/workspace/systems/framework/app/core/Handler.php(79): Handler::render(Object(ErrorException))
+#7 [internal function]: Handler::handleException(Object(ErrorException))
+#8 {main}
+ 
 *******************************************************************
 
-23/03/2019 23:51:22 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
+11/04/2019 13:43:52 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Eloquent/Builder.php | 157 | Illuminate\Database\Eloquent\ModelNotFoundException
+No query results for model [FailedLogins].
+*******************************************************************
+
+11/04/2019 13:49:24 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Eloquent/Builder.php | 157 | Illuminate\Database\Eloquent\ModelNotFoundException
+No query results for model [FailedLogins].
+*******************************************************************
+
+11/04/2019 13:52:55 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Eloquent/Builder.php | 157 | Illuminate\Database\Eloquent\ModelNotFoundException
+No query results for model [FailedLogins].
+*******************************************************************
+
+11/04/2019 14:00:39 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 203 | ErrorException
+Undefined variable: ips
+*******************************************************************
+
+11/04/2019 14:02:32 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Connection.php | 636 | Illuminate\Database\QueryException
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@demo.com' for key 'user_email' (SQL: insert into `failed_logins` (`user_email`, `last_failed_login`, `failed_login_attempts`) values (admin@demo.com, 1554991352, 1))
+*******************************************************************
+
+11/04/2019 14:03:09 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Connection.php | 636 | Illuminate\Database\QueryException
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@demo.com' for key 'user_email' (SQL: insert into `failed_logins` (`user_email`, `last_failed_login`, `failed_login_attempts`) values (admin@demo.com, 1554991389, 1))
+*******************************************************************
+
+11/04/2019 15:17:48 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 225 | Error
+Cannot access protected property Illuminate\Database\Eloquent\Collection::$items
+*******************************************************************
+
+11/04/2019 15:18:06 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 225 | Error
+Cannot access protected property Illuminate\Database\Eloquent\Collection::$items
+*******************************************************************
+
+11/04/2019 15:19:52 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Connection.php | 636 | Illuminate\Database\QueryException
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@demo.com' for key 'user_email' (SQL: insert into `failed_logins` (`user_email`, `last_failed_login`, `failed_login_attempts`) values (admin@demo.com, 1554995992, 1))
+*******************************************************************
+
+11/04/2019 15:20:47 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Connection.php | 636 | Illuminate\Database\QueryException
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@demo.com' for key 'user_email' (SQL: insert into `failed_logins` (`user_email`, `last_failed_login`, `failed_login_attempts`) values (admin@demo.com, 1554996047, 1))
+*******************************************************************
+
+11/04/2019 15:21:13 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Connection.php | 636 | Illuminate\Database\QueryException
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@demo.com' for key 'user_email' (SQL: insert into `failed_logins` (`user_email`, `last_failed_login`, `failed_login_attempts`) values (admin@demo.com, 1554996073, 1))
+*******************************************************************
+
+11/04/2019 15:23:29 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 228 | ErrorException
+Undefined property: Illuminate\Database\Eloquent\Collection::$last_failed_login
+*******************************************************************
+
+11/04/2019 15:24:03 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 228 | ErrorException
+Undefined property: Illuminate\Database\Eloquent\Collection::$failed_login_attempts
+*******************************************************************
+
+11/04/2019 15:25:17 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/support/Traits/Macroable.php | 81 | BadMethodCallException
+Method increment does not exist.
+*******************************************************************
+
+11/04/2019 15:31:10 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/support/Traits/Macroable.php | 81 | BadMethodCallException
+Method increment does not exist.
+*******************************************************************
+
+11/04/2019 15:35:33 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/support/Traits/Macroable.php | 81 | BadMethodCallException
+Method save does not exist.
+*******************************************************************
+
+11/04/2019 15:36:17 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/support/Traits/Macroable.php | 81 | BadMethodCallException
+Method update does not exist.
+*******************************************************************
+
+11/04/2019 15:38:51 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Eloquent/Builder.php | 311 | TypeError
+Argument 1 passed to Illuminate\Database\Eloquent\Builder::update() must be of the type array, string given, called in /home/ubuntu/workspace/systems/framework/app/models/Login.php on line 229
+*******************************************************************
+
+11/04/2019 15:40:00 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 233 | ErrorException
+Undefined variable: FailedLogins
+*******************************************************************
+
+11/04/2019 15:41:38 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 203 | ErrorException
+Undefined variable: ips
+*******************************************************************
+
+11/04/2019 15:45:47 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 203 | ErrorException
+Undefined variable: ips
+*******************************************************************
+
+11/04/2019 15:52:41 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Connection.php | 636 | Illuminate\Database\QueryException
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '10.240.0.231-admin@demo.com' for key 'PRIMARY' (SQL: insert into `ip_failed_logins` (`ip`, `user_email`) values (10.240.0.231, admin@demo.com))
+*******************************************************************
+
+11/04/2019 15:55:28 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Connection.php | 636 | Illuminate\Database\QueryException
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '10.240.2.147-admin@demo.com' for key 'PRIMARY' (SQL: insert into `ip_failed_logins` (`ip`, `user_email`) values (10.240.2.147, admin@demo.com))
+*******************************************************************
+
+11/04/2019 16:00:44 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 252 | CSRF Attack
+User: 2 provided invalid CSRF Token 5f67640619c8f4b41988357666a0cba6
+*******************************************************************
+
+11/04/2019 16:00:44 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
 The request has been deined
 *******************************************************************
 
-23/03/2019 23:51:27 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
-Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+17/04/2019 11:03:19 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::errors()
 *******************************************************************
 
-23/03/2019 23:52:06 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
-Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+17/04/2019 11:11:52 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 252 | CSRF Attack
+User: 1 provided invalid CSRF Token 7f9a412a00f8daa4512a169f22e4f5c3
 *******************************************************************
 
-23/03/2019 23:53:02 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
-Call to undefined method Illuminate\Database\Query\Builder::dashboard()
-*******************************************************************
-
-23/03/2019 23:53:31 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
+17/04/2019 11:11:52 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
 The request has been deined
 *******************************************************************
 
-23/03/2019 23:53:38 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+17/04/2019 11:12:25 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 252 | CSRF Attack
+User: 1 provided invalid CSRF Token 7f9a412a00f8daa4512a169f22e4f5c3
+*******************************************************************
+
+17/04/2019 11:12:25 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
+The request has been deined
+*******************************************************************
+
+17/04/2019 11:12:29 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
 Call to undefined method Illuminate\Database\Query\Builder::dashboard()
 *******************************************************************
 
-24/03/2019 0:00:08 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+17/04/2019 11:14:27 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
 Call to undefined method Illuminate\Database\Query\Builder::dashboard()
 *******************************************************************
 
-24/03/2019 0:00:28 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+17/04/2019 11:14:34 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
 Call to undefined method Illuminate\Database\Query\Builder::dashboard()
 *******************************************************************
 
-24/03/2019 0:00:43 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
-Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+17/04/2019 12:04:58 | /home/ubuntu/workspace/systems/framework/app/core/File.php | 10 | ErrorException
+Class 'Model' not found
 *******************************************************************
 
-30/03/2019 13:58:44 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 253 | Error
-Class 'Database' not found
+17/04/2019 12:05:04 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
+Call to undefined method Illuminate\Database\Query\Builder::applyOptions()
 *******************************************************************
 
-30/03/2019 14:01:21 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
-Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+17/04/2019 12:05:12 | /home/ubuntu/workspace/systems/framework/app/models/Admin.php | 186 | ErrorException
+scandir(/home/ubuntu/workspace/systems/framework/app/backups/): failed to open dir: No such file or directory
 *******************************************************************
 
-30/03/2019 14:01:57 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
-Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+17/04/2019 14:50:46 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 252 | CSRF Attack
+User: 1 provided invalid CSRF Token 26e363e4eb6429b86aad47330fafd1ab
 *******************************************************************
 
-30/03/2019 14:02:02 | /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Query/Builder.php | 2003 | BadMethodCallException
-Call to undefined method Illuminate\Database\Query\Builder::dashboard()
+17/04/2019 14:50:46 | /home/ubuntu/workspace/systems/framework/app/core/components/SecurityComponent.php | 143 | Exception
+The request has been deined
 *******************************************************************
 
-30/03/2019 14:02:43 | /home/ubuntu/workspace/systems/framework/app/models/Login.php | 253 | Error
-Class 'Database' not found
+17/04/2019 14:50:50 | /home/ubuntu/workspace/systems/framework/app/models/User.php | 43 | ErrorException
+Missing argument 1 for User::files(), called in /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Eloquent/Model.php on line 2635 and defined
+*******************************************************************
+
+17/04/2019 14:50:53 | /home/ubuntu/workspace/systems/framework/app/models/User.php | 43 | ErrorException
+Missing argument 1 for User::files(), called in /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Eloquent/Model.php on line 2635 and defined
+*******************************************************************
+
+17/04/2019 14:51:17 | /home/ubuntu/workspace/systems/framework/app/models/User.php | 43 | ErrorException
+Missing argument 1 for User::files(), called in /home/ubuntu/workspace/systems/framework/vendor/illuminate/database/Eloquent/Model.php on line 2635 and defined
+*******************************************************************
+
+17/04/2019 14:52:14 | /home/ubuntu/workspace/systems/framework/app/models/User.php | 43 | ErrorException
+Missing argument 1 for User::files(), called in /home/ubuntu/workspace/systems/framework/app/views/dashboard/index.php on line 15 and defined
+*******************************************************************
+
+17/04/2019 14:53:24 | /home/ubuntu/workspace/systems/framework/app/views/dashboard/index.php | 15 | ParseError
+syntax error, unexpected ';', expecting ',' or ')'
+*******************************************************************
+
+17/04/2019 14:53:47 | /home/ubuntu/workspace/systems/framework/app/models/User.php | 43 | ErrorException
+Missing argument 1 for User::files(), called in /home/ubuntu/workspace/systems/framework/app/views/dashboard/index.php on line 15 and defined
+*******************************************************************
+
+17/04/2019 14:54:40 | /home/ubuntu/workspace/systems/framework/app/core/File.php | 10 | ErrorException
+Class 'Model' not found
 *******************************************************************
 

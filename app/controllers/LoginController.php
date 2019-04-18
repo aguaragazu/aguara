@@ -147,12 +147,13 @@ class LoginController extends Controller
         $redirect = $this->request->data('redirect');
 
         $result = $this->login->doLogIn($email, $password, $rememberMe, $this->request->clientIp(), $this->request->userAgent());
-        //dd($this->login);
+        //dd($result, $this->login);
         if (!$result) {
             Session::set('login-errors', $this->login->errors());
 
             return $this->redirector->login($redirect);
         } else {
+            dd($redirect);
             // check if redirect url exists, then construct full url
             if (!empty($redirect)) {
                 $redirect = $this->request->getProtocolAndHost().$redirect;

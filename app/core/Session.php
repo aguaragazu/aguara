@@ -320,7 +320,7 @@ class Session
 
         // update session id in database
         self::updateSessionId($data['user_id'], session_id());
-
+        //dd($_SESSION);
         // set session cookie setting manually,
         // Why? because you need to explicitly set session expiry, path, domain, secure, and HTTP.
         // @see https://www.owasp.org/index.php/PHP_Security_Cheat_Sheet#Cookies

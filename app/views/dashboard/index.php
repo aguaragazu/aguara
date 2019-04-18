@@ -12,6 +12,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
 							 <?php 
+                             dd($this->controller->user->files());
                                     $data = $this->controller->user->dashboard();
                                     $updates = $data['updates'];
                                     $stats = $data['stats'];

@@ -40,6 +40,11 @@ class User extends Model
         return $this::find($userId);
     }
 
+    public function files()
+    {
+        return $this->hasMany('File');
+    }
+
     /*
      * Update the current profile.
      *
